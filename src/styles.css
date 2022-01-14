@@ -1,10 +1,27 @@
-.App {
-  font-family: sans-serif;
-  text-align: center;
-}
+@import url("https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&display=swap");
 
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+}
+
+body {
+  background-image: url("assets/background.jpg");
+}
+
+.App {
+  line-height: 1.8;
+  font-family: "Mochiy Pop P One", sans-serif;
+}
+
+.container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background-color: #ccc;
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
