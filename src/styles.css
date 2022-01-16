@@ -1,42 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&display=swap");
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
 
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-}
-
-body {
-  line-height: 1.8;
-  background-image: url(assets/background.jpg);
-  font-family: "Mochiy Pop P One", sans-serif;
-}
-
-/* .App {
-  font-family: sans-serif;
-} */
-
-.container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  background-color: #ccc;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.regaloItem {
-  display: flex;
-  justify-content: space-between;
-}
-
-.btnDelete {
-  color: purple;
-  border: 0;
-  border-radius: 8px;
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
 }
