@@ -19,6 +19,10 @@ export default function App() {
     setList(list.filter((item) => list.indexOf(item) !== id));
   };
 
+  const borrarTodo = () => {
+    setList([]);
+  };
+
   return (
     <div className="App">
       <div className="container">
@@ -50,6 +54,7 @@ export default function App() {
                 );
               })}
           </ul>
+          <button onClick={borrarTodo}>Borrar Todo</button>
         </div>
       </div>
     </div>
