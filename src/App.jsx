@@ -25,28 +25,39 @@ export default function App() {
   return (
     <div className="App">
       <div className="container">
-        <form onSubmit={handleSubmit}>
-          <input
-            onChange={handleTextChange}
-            type="text"
-            placeholder="agrega mas regalos..."
-            value={inputText}
-          />
-          <button>Agregar</button>
-        </form>
-        <h1>Regalos:</h1>
-        <ul>
-          {list &&
-            list.map((item, id) => {
-              return (
-                <div key={id}>
-                  <li>{item}</li>
-                  <button onClick={(id) => handleDeleteItem(id)}>X</button>
-                </div>
-              );
-            })}
-        </ul>
-        <button onClick={handleDeleteAll}>Borrar Todo</button>
+        <div>
+          <form onSubmit={handleSubmit}>
+            <input
+              onChange={handleTextChange}
+              type="text"
+              placeholder="agrega mas regalos..."
+              value={inputText}
+            />
+            <button>Agregar</button>
+          </form>
+          <h1>Regalos:</h1>
+
+          {list ? (
+            <ul>
+              {list.map((item, id) => {
+                return (
+                  <div className="regaloItem" key={id}>
+                    <li>{item}</li>
+                    <button
+                      className="btnDelete"
+                      onClick={() => handleDeleteItem(id)}
+                    >
+                      X
+                    </button>
+                  </div>
+                );
+              })}
+            </ul>
+          ) : (
+            <p>Agrega algun regalo a la lista!</p>
+          )}
+          <button onClick={handleDeleteAll}>Borrar Todo</button>
+        </div>
       </div>
     </div>
   );
