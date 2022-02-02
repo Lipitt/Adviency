@@ -37,12 +37,15 @@ export default function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    let regaloObjeto = {
+      nombre: inputText,
+      cantidad: inputNum,
+    };
     //si el campo de regalos no esta vacio y el valor no existe en la lista, lo agrego al array principal
     //como un nuevo objeto. esto probablemente se puede mejorar usando algun tipo de interfaz o estandarizacion,
     //no creo que sea una buena idea crear un objeto nuevo, pero no se me ocurre como mejorarlo.
-    if (inputText && list.indexOf(inputText) === -1) {
-      setList([...list, { nombre: inputText, cantidad: inputNum }]);
+    if (inputText && !list.find(({ nombre }) => nombre === inputText)) {
+      setList([...list, regaloObjeto]);
 
       //pregunto que tipo de error es y muestro el mensaje correspondiente
       //no creo que sea una buena idea usar "else if" aca. esto zafa porque son dos tipos de errores que
