@@ -9,7 +9,7 @@ export default function App() {
   const [list, setList] = useState(() => {
     const saved = localStorage.getItem("regalos");
     const initialValue = JSON.parse(saved);
-    return initialValue || "";
+    return initialValue || [];
   });
   const [inputNum, setInputNum] = useState(1);
   const [inputText, setInputText] = useState("");
@@ -71,7 +71,7 @@ export default function App() {
   const clearFields = () => {
     setInputText("");
     setInputNum(1);
-    setInputLink();
+    setInputLink("");
   };
 
   return (
