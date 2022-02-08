@@ -3,7 +3,7 @@ const RegaloItem = ({ index, item, deleteItem }) => {
     <div className="containerItem">
       <li>
         <img src={item.url} alt="thumbnail" width="32" height="32" />
-        {item.cantidad} {item.nombre}
+        {item.cantidad} {item.nombre} {item.destinatario}
       </li>
       <button
         className="btnDelete"

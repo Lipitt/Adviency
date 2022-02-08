@@ -5,8 +5,10 @@ const RegaloForm = ({
   inputUrl,
   numChange,
   inputNum,
-  AgregarItem,
   submitItem,
+  modalDisplay,
+  destChange,
+  inputDest,
 }) => {
   return (
     <form className="formContainer" onSubmit={submitItem}>
@@ -18,19 +20,28 @@ const RegaloForm = ({
         value={inputText}
       />
       <input
+        className="destInput"
+        type="text"
+        placeholder="destinatario"
+        onChange={destChange}
+        value={inputDest}
+      />
+      <input
         className="textInput"
         type="text"
         placeholder="link de imagen"
         onChange={urlChange}
         value={inputUrl}
       />
+
       <input
         className="numInput"
         type="number"
         onChange={numChange}
         value={inputNum}
       />
-      <button onClick={AgregarItem}> Agregar</button>
+      <button> Agregar</button>
+      <button onClick={() => modalDisplay(false)}>Cerrar</button>
     </form>
   );
 };

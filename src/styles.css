@@ -46,3 +46,8 @@ body {
 .formContainer > * {
   margin: 0px 5px;
 }
+
+.modalForm {
+  color: purple;
+  background-color: green;
+}

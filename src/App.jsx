@@ -3,7 +3,21 @@ import { useState } from "react";
 import RegaloList from "./components/RegaloList";
 import RegaloForm from "./components/RegaloForm";
 import ErrorMsj from "./components/ErrorMsj";
+import Modal from "react-modal";
 import giftThumb from "./assets/gift-thumbnail.jpg";
+
+Modal.setAppElement("#root");
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
 
 export default function App() {
   const [list, setList] = useState(
@@ -14,12 +28,15 @@ export default function App() {
   const [inputUrl, setInputUrl] = useState("");
   const [errorFlag, setErrorFlag] = useState(false);
   const [errorMsj, setErrorMsj] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [inputDest, setinputDest] = useState("");
 
   const handleAddItem = (e) => {
     e.preventDefault();
 
     let regaloObj = {
       nombre: inputText,
+      destinatario: inputDest,
       cantidad: inputNum,
       url: inputUrl || giftThumb,
     };
@@ -27,6 +44,7 @@ export default function App() {
     if (inputText && !list.find(({ nombre }) => nombre === inputText)) {
       setList([...list, regaloObj]);
       localStorage.setItem("regalos", JSON.stringify([...list, regaloObj]));
+      setShowModal(false);
     } else if (!inputText) {
       showError("el campo no puede estar vacio");
     } else {
@@ -48,6 +66,10 @@ export default function App() {
     setInputUrl(e.target.value);
   };
 
+  const handleDestChange = (e) => {
+    setinputDest(e.target.value);
+  };
+
   const handleDeleteItem = (index) => {
     let updatedList = list.filter((item) => list.indexOf(item) !== index);
     setList(updatedList);
@@ -67,25 +89,38 @@ export default function App() {
     localStorage.clear();
   };
 
+  const handleModalDisplay = (bool) => {
+    !bool ? setShowModal(false) : setShowModal(true);
+  };
+
   const clearFields = () => {
     setInputText("");
     setInputNum(1);
     setInputUrl("");
+    setinputDest("");
   };
   return (
     <div className="App">
       <div className="container">
         <div>
-          <ErrorMsj displayError={errorFlag} errorMsj={errorMsj} />
-          <RegaloForm
-            inputText={inputText}
-            inputNum={inputNum}
-            inputUrl={inputUrl}
-            textChange={handleTextChange}
-            numChange={handleNumChange}
-            urlChange={handleUrlChange}
-            submitItem={handleAddItem}
-          />
+          <button onClick={() => handleModalDisplay(true)}>
+            Agregar Regalo
+          </button>
+          <Modal style={customStyles} isOpen={showModal}>
+            <ErrorMsj displayError={errorFlag} errorMsj={errorMsj} />
+            <RegaloForm
+              inputText={inputText}
+              inputNum={inputNum}
+              inputUrl={inputUrl}
+              inputDest={inputDest}
+              textChange={handleTextChange}
+              numChange={handleNumChange}
+              urlChange={handleUrlChange}
+              destChange={handleDestChange}
+              submitItem={handleAddItem}
+              modalDisplay={handleModalDisplay}
+            />
+          </Modal>
           <RegaloList list={list} deleteItem={handleDeleteItem} />
           <button className="btn" onClick={deleteAll}>
             Borrar Todo
