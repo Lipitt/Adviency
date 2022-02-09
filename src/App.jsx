@@ -30,24 +30,75 @@ export default function App() {
   const [inputNum, setInputNum] = useState(1);
   const [showError, setShowError] = useState(false);
   const [errorMsj, setErrorMsj] = useState("");
+  const [editFlag, setEditFlag] = useState(false);
+  const [editId, setEditId] = useState(0);
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   let regaloObj = {
+  //     nombre: inputName,
+  //     dest: inputDest,
+  //     url: inputUrl || giftThumbnail,
+  //     cantidad: inputNum,
+  //   };
+
+  //   if (inputName && !list.find(({ nombre }) => nombre === inputName)) {
+  //     setList([...list, regaloObj]);
+  //     localStorage.setItem("regalos", JSON.stringify([...list, regaloObj]));
+  //   } else if (!inputName) {
+  //     displayError("el campo no puede estar vacio");
+  //   } else {
+  //     displayError("el item ya esta en la lista");
+  //   }
+
+  //   clearFields();
+  //   setShowModal(false);
+
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     let regaloObj = {
+      id: editId !== 0 ? editId : list.length + 1,
       nombre: inputName,
       dest: inputDest,
       url: inputUrl || giftThumbnail,
       cantidad: inputNum,
     };
 
-    if (inputName && !list.find(({ nombre }) => nombre === inputName)) {
-      setList([...list, regaloObj]);
-      localStorage.setItem("regalos", JSON.stringify([...list, regaloObj]));
-    } else if (!inputName) {
-      displayError("el campo no puede estar vacio");
+    if (!editFlag) {
+      if (inputName && !list.find(({ nombre }) => nombre === inputName)) {
+        setList([...list, regaloObj]);
+        localStorage.setItem("regalos", JSON.stringify([...list, regaloObj]));
+      } else if (!inputName) {
+        displayError("el campo no puede estar vacio");
+      } else {
+        displayError("el item ya esta en la lista");
+      }
     } else {
-      displayError("el item ya esta en la lista");
+      console.log("edit?");
+      console.log(list);
+      setList((list[0] = regaloObj));
+      localStorage.setItem("regalos", JSON.stringify((list[0] = regaloObj)));
+      setEditFlag(false);
     }
+
+    /* 
+    {
+      id: 1,
+      nombre: cho,
+      cant: 2,
+      url: default
+      dest: gonzy
+    }, {
+       id: 2,
+      nombre: zanahoria,
+      cant: 4,
+      url: default
+      dest: david
+    }
+
+    */
 
     clearFields();
     setShowModal(false);
@@ -68,9 +119,24 @@ export default function App() {
   };
 
   const handleDeleteItem = (index) => {
-    let filteredArray = list.filter((item) => list.indexOf(item) !== index);
+    let filteredArray = list.filter((item) => list.indexOf(item) + 1 !== index);
     localStorage.setItem("regalos", JSON.stringify(filteredArray));
     setList(filteredArray);
+  };
+
+  const handleEditItem = (index) => {
+    clearFields();
+    setShowModal(true);
+    let editObj = list.filter((item) => list.indexOf(item) + 1 === index);
+    console.log(editObj);
+    setInputName(editObj[0].nombre);
+    setInputUrl(editObj[0].url);
+    setInputNum(editObj[0].cantidad);
+    setInputDest(editObj[0].dest);
+    setEditFlag(true);
+    console.log(index);
+    setEditId(index);
+    console.log("Edit end");
   };
 
   const handleDeleteAll = () => {
@@ -87,6 +153,7 @@ export default function App() {
   };
 
   const handleShowModal = (bool) => {
+    console.log(list);
     !bool ? setShowModal(false) : setShowModal(true);
   };
 
@@ -117,7 +184,11 @@ export default function App() {
               displayModal={handleShowModal}
             />
           </Modal>
-          <RegaloList list={list} deleteItem={handleDeleteItem} />
+          <RegaloList
+            list={list}
+            deleteItem={handleDeleteItem}
+            editItem={handleEditItem}
+          />
           <button className="btn" onClick={handleDeleteAll}>
             Borrar Todo
           </button>

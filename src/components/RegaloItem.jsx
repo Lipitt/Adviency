@@ -1,4 +1,4 @@
-function RegaloItem({ item, index, deleteItem }) {
+function RegaloItem({ item, deleteItem, editItem }) {
   return (
     <div className="containerItem">
       <li>
@@ -8,10 +8,17 @@ function RegaloItem({ item, index, deleteItem }) {
       <button
         className="btnDelete"
         onClick={() => {
-          deleteItem(index);
+          deleteItem(item.id);
         }}
       >
         X
+      </button>
+      <button
+        onClick={() => {
+          editItem(item.id);
+        }}
+      >
+        E
       </button>
     </div>
   );

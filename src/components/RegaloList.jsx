@@ -1,6 +1,6 @@
 import RegaloItem from "./RegaloItem";
 
-function RegaloList({ list, deleteItem }) {
+function RegaloList({ list, deleteItem, editItem }) {
   return (
     <div>
       <h1>Regalos:</h1>
@@ -10,9 +10,9 @@ function RegaloList({ list, deleteItem }) {
             return (
               <RegaloItem
                 item={item}
-                index={index}
                 key={index}
                 deleteItem={deleteItem}
+                editItem={editItem}
               />
             );
           })}
