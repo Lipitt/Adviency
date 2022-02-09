@@ -1,10 +1,48 @@
+@import url("https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&display=swap");
+
+body {
+  background-image: url(assets/background.jpg);
+}
+
 .App {
-  font-family: sans-serif;
+  font-family: "Mochiy Pop P One", sans-serif;
   text-align: center;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+.container {
+  background-color: #ccc;
+  position: absolute;
+  top: 30%;
+  left: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+
+.containerItem {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn {
+  color: red;
+}
+
+.btnDelete {
+  border-radius: 50%;
+  width: 20px;
+  color: red;
+}
+
+.numInput {
+  width: 40px;
+}
+
+.textInput {
+  width: 150px;
+}
+
+.formContainer > * {
+  margin: 0px 5px;
 }
