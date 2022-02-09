@@ -8,6 +8,17 @@ import giftThumbnail from "./assets/gift-thumbnail.jpg";
 
 Modal.setAppElement("#root");
 
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+
 export default function App() {
   const [list, setList] = useState(
     JSON.parse(localStorage.getItem("regalos")) || []
@@ -91,7 +102,7 @@ export default function App() {
       <div className="container">
         <div>
           <button onClick={() => handleShowModal(true)}>Agregar</button>
-          <Modal isOpen={showModal}>
+          <Modal isOpen={showModal} style={customStyles}>
             <ErrorDiv errorMsj={errorMsj} showError={showError} />
             <RegaloForm
               submitItem={handleSubmit}
