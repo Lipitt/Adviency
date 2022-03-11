@@ -1,13 +1,15 @@
 import React from "react";
 import { RegaloItem } from "./RegaloItem";
 
-const RegaloLista = ({ list }) => {
+const RegaloLista = ({ list, deleteItem }) => {
   return (
     <div>
-      {list.length > 0 ? (
+      {list ? (
         <ul>
-          {list.map((item, index) => {
-            return <RegaloItem key={index} item={item} />;
+          {list.map((item) => {
+            return (
+              <RegaloItem key={item.id} item={item} deleteItem={deleteItem} />
+            );
           })}
         </ul>
       ) : (
