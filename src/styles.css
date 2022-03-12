@@ -1,0 +1,11 @@
+/* .inputClass:focus {
+  outline-color: red;
+} */
+
+input:focus {
+  outline-color: blue;
+}
+
+button:focus {
+  outline-color: blue;
+}
