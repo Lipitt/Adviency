@@ -1,26 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 import { RegaloItem } from "./RegaloItem";
+import RegalosContext from "../context/RegalosContext";
 
-const RegaloLista = ({ list, deleteItem, editItem }) => {
+const RegaloLista = () => {
+  const { regalos, deleteAll } = useContext(RegalosContext);
   return (
-    <div>
-      {list ? (
-        <ul>
-          {list.map((item) => {
-            return (
-              <RegaloItem
-                key={item.id}
-                item={item}
-                deleteItem={deleteItem}
-                editItem={editItem}
-              />
-            );
-          })}
-        </ul>
-      ) : (
-        <p>No hay items en la lista</p>
-      )}
-    </div>
+    <>
+      <div>
+        {regalos ? (
+          <ul>
+            {regalos.map((item) => {
+              return <RegaloItem key={item.id} item={item} />;
+            })}
+          </ul>
+        ) : (
+          <p>No hay items en la lista</p>
+        )}
+      </div>
+      <button onClick={deleteAll}>Borrar Todo</button>
+    </>
   );
 };
 

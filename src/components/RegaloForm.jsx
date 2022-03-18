@@ -1,47 +1,70 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 
 import { v4 as uuidv4 } from "uuid";
 import giftThumbnail from "../assets/gift-thumbnail.jpg";
 
-const RegaloForm = ({ onSubmit }) => {
+import RegalosContext from "../context/RegalosContext";
+
+const RegaloForm = () => {
+  const { modalIsOpen, regaloEdit, submitRegalo, updateItem } =
+    useContext(RegalosContext);
+
+  const inputRef = useRef();
+
+  useEffect(() => {
+    console.log("effect");
+    if (modalIsOpen === true) {
+      inputRef.current.focus();
+    }
+  }, [modalIsOpen]);
+
   const [inputText, setInputText] = useState("");
   const [inputNum, setInputNum] = useState(1);
   const [inputImg, setInputImg] = useState("");
   const [inputDest, setInputDest] = useState("");
 
-  const inputRef = useRef(null);
-
-  useEffect(() => {
-    inputRef.current.focus();
-  });
-
-  const handleTextChange = (e) => {
+  const textChange = (e) => {
     setInputText(e.target.value);
   };
 
-  const handleNumChange = (e) => {
+  const numChange = (e) => {
     setInputNum(e.target.value);
   };
 
-  const handleImgChange = (e) => {
+  const imgChange = (e) => {
     setInputImg(e.target.value);
   };
 
-  const handleDestChange = (e) => {
+  const destChange = (e) => {
     setInputDest(e.target.value);
   };
+
   const submitPrep = (e) => {
     e.preventDefault();
     let regalo = {
-      id: uuidv4(),
+      id: regaloEdit.edit ? regaloEdit.item.id : uuidv4(),
       nombre: inputText,
       cantidad: inputNum,
       img: inputImg || giftThumbnail,
       destinatario: inputDest,
     };
 
-    onSubmit(regalo);
+    if (regaloEdit.edit) {
+      updateItem(regaloEdit.item.id, regalo);
+    } else {
+      submitRegalo(regalo);
+    }
   };
+
+  useEffect(() => {
+    if (regaloEdit.edit === true) {
+      setInputText(regaloEdit.item.nombre);
+      setInputImg(regaloEdit.item.img);
+      setInputNum(regaloEdit.item.cantidad);
+      setInputDest(regaloEdit.item.destinatario);
+    }
+  }, [regaloEdit]);
+
   return (
     <form onSubmit={submitPrep}>
       <input
@@ -50,26 +73,26 @@ const RegaloForm = ({ onSubmit }) => {
         type="text"
         value={inputText}
         placeholder="Que regalo queres?"
-        onChange={handleTextChange}
+        onChange={textChange}
       />
       <input
         className="inputClass"
         type="number"
         value={inputNum}
-        onChange={handleNumChange}
+        onChange={numChange}
       />
       <input
         className="inputClass"
         ype="string"
         value={inputImg}
-        onChange={handleImgChange}
+        onChange={imgChange}
       />
       <input
         className="inputClass"
         type="text"
         value={inputDest}
         placeholder="para quien es?"
-        onChange={handleDestChange}
+        onChange={destChange}
       />
       <button>Agregar</button>
     </form>
